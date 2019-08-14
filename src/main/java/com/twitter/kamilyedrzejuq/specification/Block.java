@@ -1,5 +1,8 @@
 package com.twitter.kamilyedrzejuq.specification;
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
 /**
  * Reprensets a possible blocks in test methods.
  * Each block have a corresponding byte code instruction for a static method from {@link Specification} class.
@@ -27,5 +30,11 @@ public enum  Block {
     private final String byteCodeInstruction;
     Block(String instruction) {
         byteCodeInstruction = instruction;
+    }
+
+    public static Optional<Block> matchWithInstruction(String code) {
+        return Stream.of(Block.values())
+                .filter(b -> code.contains(b.byteCodeInstruction))
+                .findFirst();
     }
 }
