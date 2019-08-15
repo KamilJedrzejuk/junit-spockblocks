@@ -23,7 +23,6 @@ public class TestMethodBlocksProvider {
     private final Printer printer = new Textifier();
     private final TraceMethodVisitor mp = new TraceMethodVisitor(printer);
 
-
     public LinkedList<Block> read(Class<?> clazz, Method method) {
         ClassReader classReader = createClassReader(clazz);
         classReader.accept(classNode, 0);

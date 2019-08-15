@@ -1,9 +1,5 @@
-package com.twitter.kamilyedrzejuq.specification;
+package com.twitter.kamilyedrzejuq.base;
 
-import com.twitter.kamilyedrzejuq.junit.SpockBlockExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-@ExtendWith({SpockBlockExtension.class})
 public class Specification {
 
     static protected void GIVEN(){}
