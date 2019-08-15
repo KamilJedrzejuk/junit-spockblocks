@@ -16,6 +16,15 @@ public class ClassMethodStructureVerifier {
         }
     }
 
+    public void verify(Method[] methods) {
+        for(Method method: methods) {
+            if(isTestJunitMethod(method)) {
+                Class<?> clazz = method.getDeclaringClass();
+                structureVerifier.verify(clazz, method);
+            }
+        }
+    }
+
     public TestVerificationResult verifySilence() {
         Method method = tryFindCallMethod();
         if (method != null) {
@@ -27,8 +36,10 @@ public class ClassMethodStructureVerifier {
 
     private Method tryFindCallMethod() {
         int index = 3; //possible index on stacktrace
-        String declaringClass = Thread.currentThread().getStackTrace()[index].getClassName();
-        String methodName = Thread.currentThread().getStackTrace()[index].getMethodName();
+        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[index];
+
+        String declaringClass = stackTraceElement.getClassName();
+        String methodName = stackTraceElement.getMethodName();
         Method method = tryGetMethodByName(declaringClass, methodName);
         if (isTestJunitMethod(method)) {
             return method;
@@ -68,5 +79,6 @@ public class ClassMethodStructureVerifier {
         }
         return null;
     }
+
 
 }

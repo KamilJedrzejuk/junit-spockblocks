@@ -12,11 +12,11 @@ class StructureVerifier {
 
     private static final TestMethodBlocksProvider testMethodBlocksProvider = new TestMethodBlocksProvider();
 
-    public TestVerificationResult verifySilence(Class<?> clazz, Method method) {
+    TestVerificationResult verifySilence(Class<?> clazz, Method method) {
         LinkedList<Block> blocks = testMethodBlocksProvider.read(clazz, method);
         TestStructureSpecification testStructureSpecification = new TestStructureSpecification(blocks);
         try {
-            testStructureSpecification.test();
+            testStructureSpecification.test(method);
         } catch (BlockCombinationNotAllowed e) {
             TestVerificationFailed testVerificationFailed = new TestVerificationFailed(e.getMessage(), e);
             return TestVerificationResult.fail(blocks, testVerificationFailed);
@@ -24,7 +24,7 @@ class StructureVerifier {
         return TestVerificationResult.success(blocks);
     }
 
-    public void verify(Class<?> clazz, Method method) {
+    void verify(Class<?> clazz, Method method) {
         TestVerificationResult testVerificationResult = verifySilence(clazz, method);
         Optional<TestVerificationResult.Fail> fail1 = testVerificationResult.getFail();
         fail1.ifPresent(fail -> rethrow( fail.throwable));

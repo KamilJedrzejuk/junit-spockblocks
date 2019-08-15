@@ -2,8 +2,8 @@ package com.twitter.kamilyedrzejuq;
 
 
 import com.twitter.kamilyedrzejuq.specification.Block;
+import com.twitter.kamilyedrzejuq.specification.Specification;
 import com.twitter.kamilyedrzejuq.veryfier.ClassMethodStructureVerifier;
-import com.twitter.kamilyedrzejuq.veryfier.TestVerificationFailed;
 import com.twitter.kamilyedrzejuq.veryfier.TestVerificationResult;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class BlockTest extends com.twitter.kamilyedrzejuq.base.Specification {
+public class BlockTest extends Specification {
 
     ClassMethodStructureVerifier methodStructureVerifier = new ClassMethodStructureVerifier();
 
@@ -37,8 +36,8 @@ public class BlockTest extends com.twitter.kamilyedrzejuq.base.Specification {
     }
 
     @Test
-    public void should_get_exception_when_no_any_block_in_test_method() {
-        assertThrows(TestVerificationFailed.class, () -> methodStructureVerifier.verify());
+    public void method_without_any_block() {
+
     }
 
     private List<Block> list(Block... blocks) {

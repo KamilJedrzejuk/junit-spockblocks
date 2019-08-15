@@ -3,9 +3,8 @@ package com.twitter.kamilyedrzejuq.veryfier;
 
 import com.twitter.kamilyedrzejuq.specification.Block;
 import com.twitter.kamilyedrzejuq.specification.BlockCombinationNotAllowed;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,15 +12,6 @@ import java.util.function.Predicate;
 
 class TestStructureSpecification {
 
-    @Data
-    @AllArgsConstructor
-    public static class Error {
-        String message;
-
-        static Error of(String message) {
-            return new Error(message);
-        }
-    }
 
     private final LinkedList<Block> blocks;
 
@@ -29,9 +19,10 @@ class TestStructureSpecification {
         this.blocks = blocks;
     }
 
-    void test() {
+    void test(Method method) {
+
         Predicate<LinkedList<Block>> containsBlocks = containsBlocks();
-        testAndThrowErrorWhenFail(containsBlocks, "Test should contains structure with blocks: {given when, then, expect}");
+        testAndThrowErrorWhenFail(containsBlocks, buildExcMessage("Test should contains structure with blocks: {given when, then, expect}", method));
 
 
         //
@@ -40,6 +31,10 @@ class TestStructureSpecification {
 //        Predicate<LinkedList<Block>> containsExpectAndOptionallyAndBlocks = firstBlockIsExpect().and(afterExpectBlockOnlyAndIsAllowed());
 //        testAndThrowErrorWhenFail(containsExpectAndOptionallyAndBlocks, "After expect block only and blocks are allowed");
 
+    }
+
+    private String buildExcMessage(String message, Method method) {
+        return message + " method: " + method.getName();
     }
 
     private void testAndThrowErrorWhenFail(Predicate<LinkedList<Block>> predicate, String exceptionMessage) {

@@ -21,11 +21,11 @@ import java.util.stream.Stream;
  */
 public enum  Block {
 
-    GIVEN("INVOKESTATIC com/twitter/kamilyedrzejuq/BlockTest.GIVEN"),
-    WHEN("INVOKESTATIC com/twitter/kamilyedrzejuq/BlockTest.WHEN"),
-    THEN("INVOKESTATIC com/twitter/kamilyedrzejuq/BlockTest.THEN"),
-    EXPECT("INVOKESTATIC com/twitter/kamilyedrzejuq/BlockTest.EXPECT"),
-    AND("INVOKESTATIC com/twitter/kamilyedrzejuq/BlockTest.AND");
+    GIVEN("GIVEN"),
+    WHEN("WHEN"),
+    THEN("THEN"),
+    EXPECT("EXPECT"),
+    AND("AND");
 
     private final String byteCodeInstruction;
     Block(String instruction) {
@@ -34,7 +34,7 @@ public enum  Block {
 
     public static Optional<Block> matchWithInstruction(String code) {
         return Stream.of(Block.values())
-                .filter(b -> code.contains(b.byteCodeInstruction))
+                .filter(b -> code.trim().startsWith("INVOKEVIRTUAL") && code.contains(b.byteCodeInstruction))
                 .findFirst();
     }
 }
