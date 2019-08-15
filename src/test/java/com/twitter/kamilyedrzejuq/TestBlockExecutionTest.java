@@ -1,6 +1,7 @@
 package com.twitter.kamilyedrzejuq;
 
-import com.twitter.kamilyedrzejuq.veryfier.TestVerificationFailed;
+
+import com.twitter.kamilyedrzejuq.specification.SpecificationStructureException;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.discovery.MethodSelector;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
@@ -26,7 +27,7 @@ public class TestBlockExecutionTest {
 
         //and
         Class<? extends Throwable> actualException = summary.getFailures().get(0).getException().getClass();
-        assertEquals(TestVerificationFailed.class, actualException);
+        assertEquals(SpecificationStructureException.class, actualException);
     }
 
     private TestExecutionSummary runTestMethod(Class<?> testClass, String methodName) {

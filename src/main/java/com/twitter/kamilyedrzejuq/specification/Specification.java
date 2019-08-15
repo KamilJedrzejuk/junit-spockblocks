@@ -1,5 +1,6 @@
 package com.twitter.kamilyedrzejuq.specification;
 
+import com.twitter.kamilyedrzejuq.extension.Verifier;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(Verifier.class)

@@ -1,4 +1,4 @@
-package com.twitter.kamilyedrzejuq.clazz;
+package com.twitter.kamilyedrzejuq.method;
 
 public class ReadClassException extends RuntimeException {
 

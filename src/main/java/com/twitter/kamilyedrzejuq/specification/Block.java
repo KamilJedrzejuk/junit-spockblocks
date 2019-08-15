@@ -1,5 +1,7 @@
 package com.twitter.kamilyedrzejuq.specification;
 
+import com.twitter.kamilyedrzejuq.method.MethodInstruction;
+
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -19,7 +21,7 @@ import java.util.stream.Stream;
  * }
  * </pre>
  */
-public enum  Block {
+public enum Block {
 
     GIVEN("GIVEN"),
     WHEN("WHEN"),
@@ -32,7 +34,8 @@ public enum  Block {
         byteCodeInstruction = instruction;
     }
 
-    public static Optional<Block> matchWithInstruction(String code) {
+    public static Optional<Block> matchWithInstruction(MethodInstruction instruction) {
+        String code = instruction.getCodeLine();
         return Stream.of(Block.values())
                 .filter(b -> code.trim().startsWith("INVOKEVIRTUAL") && code.contains(b.byteCodeInstruction))
                 .findFirst();

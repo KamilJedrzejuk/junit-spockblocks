@@ -3,21 +3,18 @@ package com.twitter.kamilyedrzejuq;
 
 import com.twitter.kamilyedrzejuq.specification.Block;
 import com.twitter.kamilyedrzejuq.specification.Specification;
-import com.twitter.kamilyedrzejuq.veryfier.ClassMethodStructureVerifier;
-import com.twitter.kamilyedrzejuq.veryfier.TestVerificationResult;
+import com.twitter.kamilyedrzejuq.specification.SpecificationVerifier;
+import com.twitter.kamilyedrzejuq.specification.Structure;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 public class BlockTest extends Specification {
 
-    ClassMethodStructureVerifier methodStructureVerifier = new ClassMethodStructureVerifier();
+    SpecificationVerifier specificationVerifier = new SpecificationVerifier();
 
     @Test
     public void should_get_proper_blocks_from_method() {
@@ -31,9 +28,10 @@ public class BlockTest extends Specification {
         THEN();
         //code omitted
 
-        TestVerificationResult verificationResult = methodStructureVerifier.verifySilence();
+        Optional<Structure> structureBlockOfTestMethod = specificationVerifier.getStructureBlockOfTestMethod();
+        LinkedList<Block> blocks = structureBlockOfTestMethod.map(Structure::getBlocks).orElse(new LinkedList<>());
 
-        assertIterableEquals(list(Block.GIVEN, Block.WHEN, Block.THEN), verificationResult.getBlocks());
+        assertIterableEquals(list(Block.GIVEN, Block.WHEN, Block.THEN), blocks);
     }
 
     @Test

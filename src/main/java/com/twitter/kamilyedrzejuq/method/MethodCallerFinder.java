@@ -1,40 +1,11 @@
-package com.twitter.kamilyedrzejuq.veryfier;
+package com.twitter.kamilyedrzejuq.method;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Collections;
 
-public class ClassMethodStructureVerifier {
+public class MethodCallerFinder {
 
-    private final StructureVerifier structureVerifier = new StructureVerifier();
-
-    public void verify() {
-        Method method = tryFindCallMethod();
-        if (method != null) {
-            Class<?> clazz = method.getDeclaringClass();
-            structureVerifier.verify(clazz, method);
-        }
-    }
-
-    public void verify(Method[] methods) {
-        for(Method method: methods) {
-            if(isTestJunitMethod(method)) {
-                Class<?> clazz = method.getDeclaringClass();
-                structureVerifier.verify(clazz, method);
-            }
-        }
-    }
-
-    public TestVerificationResult verifySilence() {
-        Method method = tryFindCallMethod();
-        if (method != null) {
-            Class<?> clazz = method.getDeclaringClass();
-            return structureVerifier.verifySilence(clazz, method);
-        }
-        return TestVerificationResult.fail(Collections.emptyList(), null);
-    }
-
-    private Method tryFindCallMethod() {
+    public Method tryFindCallMethod() {
         int index = 3; //possible index on stacktrace
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[index];
 
@@ -79,6 +50,4 @@ public class ClassMethodStructureVerifier {
         }
         return null;
     }
-
-
 }

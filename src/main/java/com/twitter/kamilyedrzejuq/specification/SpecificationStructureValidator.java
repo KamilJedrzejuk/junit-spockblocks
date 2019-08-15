@@ -1,8 +1,5 @@
-package com.twitter.kamilyedrzejuq.veryfier;
+package com.twitter.kamilyedrzejuq.specification;
 
-
-import com.twitter.kamilyedrzejuq.specification.Block;
-import com.twitter.kamilyedrzejuq.specification.BlockCombinationNotAllowed;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -10,27 +7,18 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.function.Predicate;
 
-class TestStructureSpecification {
+class SpecificationStructureValidator {
 
+    private final Structure structure;
 
-    private final LinkedList<Block> blocks;
-
-    TestStructureSpecification(LinkedList<Block> blocks) {
-        this.blocks = blocks;
+    SpecificationStructureValidator(Structure structure) {
+        this.structure = structure;
     }
 
-    void test(Method method) {
-
+    void test() {
         Predicate<LinkedList<Block>> containsBlocks = containsBlocks();
-        testAndThrowErrorWhenFail(containsBlocks, buildExcMessage("Test should contains structure with blocks: {given when, then, expect}", method));
-
-
-        //
-//        firstBlockIsExpect().
-//
-//        Predicate<LinkedList<Block>> containsExpectAndOptionallyAndBlocks = firstBlockIsExpect().and(afterExpectBlockOnlyAndIsAllowed());
-//        testAndThrowErrorWhenFail(containsExpectAndOptionallyAndBlocks, "After expect block only and blocks are allowed");
-
+        String exceptionMessage = buildExcMessage("Test should contains structure with blocks: {given when, then, expect}", structure.getMethod());
+        testAndThrowErrorWhenFail(containsBlocks, exceptionMessage);
     }
 
     private String buildExcMessage(String message, Method method) {
@@ -38,10 +26,9 @@ class TestStructureSpecification {
     }
 
     private void testAndThrowErrorWhenFail(Predicate<LinkedList<Block>> predicate, String exceptionMessage) {
-        boolean failed = !predicate.test(blocks);
+        boolean failed = !predicate.test(structure.getBlocks());
         if (failed)
-            throw new BlockCombinationNotAllowed(exceptionMessage);
-
+            throw new SpecificationStructureException(exceptionMessage);
     }
 
     private static Predicate<LinkedList<Block>> containsBlocks() {
@@ -59,7 +46,6 @@ class TestStructureSpecification {
     private static Predicate<LinkedList<Block>> afterExpectBlockOnlyAndIsAllowed() {
         return blocks -> blocks.size() >= 2 && blocks.getFirst() == Block.EXPECT
                 && new HashSet<>(blocks.subList(1, blocks.size() - 1)).contains(Block.AND);
-
     }
 
     private static Predicate<LinkedList<Block>> noDoubleOfPrimaryBlocks() {
@@ -72,7 +58,6 @@ class TestStructureSpecification {
                         &&
                         blocks.stream().filter(b -> b == Block.EXPECT).count() <= 1;
     }
-
 
     static private LinkedList<Block> blocks(Block... blocks) {
         LinkedList<Block> result = new LinkedList<>();
