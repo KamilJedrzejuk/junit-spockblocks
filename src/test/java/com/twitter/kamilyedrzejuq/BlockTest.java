@@ -5,6 +5,7 @@ import com.twitter.kamilyedrzejuq.specification.Block;
 import com.twitter.kamilyedrzejuq.specification.Specification;
 import com.twitter.kamilyedrzejuq.veryfier.ClassMethodStructureVerifier;
 import com.twitter.kamilyedrzejuq.veryfier.TestVerificationResult;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -36,6 +37,7 @@ public class BlockTest extends Specification {
     }
 
     @Test
+    @Disabled
     public void method_without_any_block() {
 
     }

@@ -2,6 +2,7 @@ package com.twitter.kamilyedrzejuq;
 
 import com.twitter.kamilyedrzejuq.veryfier.TestVerificationFailed;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.engine.discovery.MethodSelector;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
@@ -31,9 +32,12 @@ public class TestBlockExecutionTest {
     private TestExecutionSummary runTestMethod(Class<?> testClass, String methodName) {
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
 
-        LauncherDiscoveryRequest request = request().selectors(selectMethod(testClass, methodName)).build();
-        LauncherFactory.create
-                ().execute(request, listener);
+        MethodSelector methodSelector = selectMethod(testClass, methodName);
+        LauncherDiscoveryRequest request = request().selectors(methodSelector)
+                .configurationParameter(
+                        "junit.jupiter.conditions.deactivate",
+                        "org.junit.*DisabledCondition").build();
+        LauncherFactory.create().execute(request, listener);
 
         return listener.getSummary();
     }
