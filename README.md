@@ -1,7 +1,7 @@
 # Table of contents
 
 1. [About](#about)
-2. [Stack technology](#Stack technology)
+2. [Stack technology](#Stack-technology)
 
 ## About
 Junit-spockblocks is simple junit extension which allow us to use a some subset of blocks known
