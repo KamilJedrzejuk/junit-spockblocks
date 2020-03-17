@@ -15,11 +15,11 @@ from a Spock framework:
 ## Example
 
 ```ruby
-public class BlockTest extends Specification {
+public class BlaBlaSpec extends Specification {
 
     
     @Test
-    public void should_get_proper_blocks_from_method() {
+    public void should_bla_bla_bla() {
 
         GIVEN();
         //code omitted
@@ -43,4 +43,4 @@ public class BlockTest extends Specification {
  
  ## TODO
   - how to check proper combination of labels
-  - how to check if in the THEN seciotn we have asserion, and in the AND sections which can occur after THEN section
+  - how to check if in the THEN section we have assertion, and also in the AND sections which can occur after THEN section
