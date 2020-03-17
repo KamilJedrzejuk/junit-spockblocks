@@ -94,7 +94,7 @@ public class Specification {
 }
 ```
 
-Class belowe validate a structure of test junit method:
+Class below validates a structure of test junit method:
 
 ```java
 public class SpecificationVerifier {
