@@ -11,6 +11,29 @@ from a Spock framework:
  - when
  - then
  - expect
+ 
+## Example
+
+```ruby
+public class BlockTest extends Specification {
+
+    
+    @Test
+    public void should_get_proper_blocks_from_method() {
+
+        GIVEN();
+        //code omitted
+
+        WHEN();
+        //code omitted
+
+        THEN();
+        //code omitted
+        
+    }
+}
+
+``` 
 
 ## Stack technology
  - junit 5
