@@ -41,4 +41,6 @@ public class BlockTest extends Specification {
  - asm library (bytecode manipulation and analysis framework)
  
  
- 
+ ## TODO
+  - how to check proper combination of labels
+  - how to check if in the THEN seciotn we have asserion, and in the AND sections which can occur after THEN section
